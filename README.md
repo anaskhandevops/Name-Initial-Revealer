@@ -1,8 +1,6 @@
 # ✨ Name Initial Revealer Game ✨
 
-<p align="center">
-  <img src="https://placehold.co/600x300/F5F3FF/1E1B4B?text=Name+Initial+Revealer&font=Inter" alt="Game Banner Placeholder">
-  </p>
+
 
 A fun and simple web-based game that magically reveals the first letter of your name after you answer a few questions! 🤔➡️🅰️
 
