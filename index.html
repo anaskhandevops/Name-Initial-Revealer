@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Initial Revealer Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Base Styles & CSS Variables --- */
+        :root {
+            /* Default Theme (Original) */
+            --bg-color: #FFFCEB;
+            --main-container-bg: #ffffff;
+            --main-container-border: #2D3748;
+            --main-container-shadow: #2D3748;
+            --question-card-bg: #FFF7ED; /* orange-50 */
+            --question-card-border: #FDBA74; /* orange-300 */
+            --question-card-shadow: #FDBA74;
+            --letter-bg: #FEF3C7; /* amber-100 */
+            --letter-text: #9A3412; /* amber-800 */
+            --letter-border: #FDE68A; /* amber-200 */
+            --letter-shadow: #FDE68A;
+            --action-button-text: white;
+            --action-button-border: #2D3748;
+            --action-button-shadow: #2D3748;
+            --action-button-hover-shadow: #2D3748;
+            --action-button-active-shadow: #2D3748;
+            --reset-button-bg: #FF7F50; /* Coral */
+            --reset-button-hover-bg: #FF6347; /* Tomato */
+            --reset-button-active-bg: #CD5C5C; /* IndianRed */
+            --yes-button-bg: #34D399; /* Emerald 400 */
+            --yes-button-border: #059669; /* Emerald 600 */
+            --yes-button-shadow: #059669;
+            --yes-button-hover-bg: #10B981; /* Emerald 500 */
+            --yes-button-hover-shadow: #047857; /* Emerald 700 */
+            --yes-button-active-bg: #059669; /* Emerald 600 */
+            --yes-button-active-shadow: #047857;
+            --no-button-bg: #F87171; /* Red 400 */
+            --no-button-border: #B91C1C; /* Red 700 */
+            --no-button-shadow: #B91C1C;
+            --no-button-hover-bg: #EF4444; /* Red 500 */
+            --no-button-hover-shadow: #991B1B; /* Red 800 */
+            --no-button-active-bg: #DC2626; /* Red 600 */
+            --no-button-active-shadow: #991B1B;
+            --result-area-bg: #FEF3C7; /* amber-100 */
+            --result-area-border: #FDE68A; /* amber-200 */
+            --result-area-shadow: #FDE68A;
+            --result-text-color: #B45309; /* amber-700 */
+            --thinking-text-color: #9A3412; /* amber-800 */
+            --heading-color: #1F2937; /* slate-800 */
+            --subheading-color: #9A3412; /* amber-800 */
+            --section-heading-color: #C2410C; /* orange-700 */
+            --section-heading-border: #FDBA74; /* orange-300 */
+            --label-color: #9A3412; /* amber-800 */
+            --footer-text-color: #6B7280; /* gray-500 */
+            --focus-ring-color: var(--reset-button-bg); /* Default focus ring */
+            --theme-selector-bg: #FEF3C7;
+            --theme-selector-border: #FDBA74;
+            --theme-selector-text: #9A3412;
+        }
+
+        /* --- Theme Definitions (Same as Birthday Guesser) --- */
+        body[data-theme="ocean-blue"] {
+            --bg-color: #E0F2FE; --main-container-bg: #ffffff; --main-container-border: #075985; --main-container-shadow: #075985; --question-card-bg: #CFFAFE; --question-card-border: #67E8F9; --question-card-shadow: #22D3EE; --letter-bg: #A5F3FC; --letter-text: #155E75; --letter-border: #67E8F9; --letter-shadow: #67E8F9; --action-button-border: #075985; --action-button-shadow: #075985; --action-button-hover-shadow: #075985; --action-button-active-shadow: #075985; --reset-button-bg: #38BDF8; --reset-button-hover-bg: #0EA5E9; --reset-button-active-bg: #0284C7; --yes-button-bg: #2DD4BF; --yes-button-border: #0D9488; --yes-button-shadow: #0D9488; --yes-button-hover-bg: #14B8A6; --yes-button-hover-shadow: #0F766E; --yes-button-active-bg: #0D9488; --yes-button-active-shadow: #0F766E; --no-button-bg: #60A5FA; --no-button-border: #2563EB; --no-button-shadow: #2563EB; --no-button-hover-bg: #3B82F6; --no-button-hover-shadow: #1D4ED8; --no-button-active-bg: #2563EB; --no-button-active-shadow: #1D4ED8; --result-area-bg: #A5F3FC; --result-area-border: #67E8F9; --result-area-shadow: #22D3EE; --result-text-color: #164E63; --thinking-text-color: #155E75; --heading-color: #0C4A6E; --subheading-color: #155E75; --section-heading-color: #0E7490; --section-heading-border: #67E8F9; --label-color: #155E75; --footer-text-color: #0369A1; --focus-ring-color: var(--reset-button-bg); --theme-selector-bg: #A5F3FC; --theme-selector-border: #67E8F9; --theme-selector-text: #155E75;
+        }
+        body[data-theme="forest-green"] {
+            --bg-color: #ECFDF5; --main-container-bg: #ffffff; --main-container-border: #064E3B; --main-container-shadow: #064E3B; --question-card-bg: #D1FAE5; --question-card-border: #6EE7B7; --question-card-shadow: #34D399; --letter-bg: #A7F3D0; --letter-text: #065F46; --letter-border: #6EE7B7; --letter-shadow: #6EE7B7; --action-button-border: #064E3B; --action-button-shadow: #064E3B; --action-button-hover-shadow: #064E3B; --action-button-active-shadow: #064E3B; --reset-button-bg: #A3E635; --reset-button-hover-bg: #84CC16; --reset-button-active-bg: #65A30D; --yes-button-bg: #4ADE80; --yes-button-border: #16A34A; --yes-button-shadow: #16A34A; --yes-button-hover-bg: #22C55E; --yes-button-hover-shadow: #15803D; --yes-button-active-bg: #16A34A; --yes-button-active-shadow: #15803D; --no-button-bg: #FACC15; --no-button-border: #CA8A04; --no-button-shadow: #CA8A04; --no-button-hover-bg: #EAB308; --no-button-hover-shadow: #A16207; --no-button-active-bg: #CA8A04; --no-button-active-shadow: #A16207; --result-area-bg: #A7F3D0; --result-area-border: #6EE7B7; --result-area-shadow: #34D399; --result-text-color: #047857; --thinking-text-color: #065F46; --heading-color: #065F46; --subheading-color: #065F46; --section-heading-color: #059669; --section-heading-border: #6EE7B7; --label-color: #065F46; --footer-text-color: #047857; --focus-ring-color: var(--reset-button-bg); --theme-selector-bg: #A7F3D0; --theme-selector-border: #6EE7B7; --theme-selector-text: #065F46;
+        }
+        body[data-theme="cosmic-purple"] {
+            --bg-color: #F5F3FF; --main-container-bg: #1E1B4B; --main-container-border: #A78BFA; --main-container-shadow: #A78BFA; --question-card-bg: #3730A3; --question-card-border: #C4B5FD; --question-card-shadow: #A78BFA; --letter-bg: #4338CA; --letter-text: #EEF2FF; --letter-border: #A78BFA; --letter-shadow: #A78BFA; --action-button-text: #1E1B4B; --action-button-border: #A78BFA; --action-button-shadow: #A78BFA; --action-button-hover-shadow: #A78BFA; --action-button-active-shadow: #A78BFA; --reset-button-bg: #F472B6; --reset-button-hover-bg: #EC4899; --reset-button-active-bg: #DB2777; --yes-button-bg: #A78BFA; --yes-button-border: #7C3AED; --yes-button-shadow: #7C3AED; --yes-button-hover-bg: #8B5CF6; --yes-button-hover-shadow: #6D28D9; --yes-button-active-bg: #7C3AED; --yes-button-active-shadow: #6D28D9; --no-button-bg: #F0ABFC; --no-button-border: #C026D3; --no-button-shadow: #C026D3; --no-button-hover-bg: #E879F9; --no-button-hover-shadow: #A21CAF; --no-button-active-bg: #C026D3; --no-button-active-shadow: #A21CAF; --result-area-bg: #4338CA; --result-area-border: #A78BFA; --result-area-shadow: #A78BFA; --result-text-color: #C4B5FD; --thinking-text-color: #A78BFA; --heading-color: #EDE9FE; --subheading-color: #C4B5FD; --section-heading-color: #A78BFA; --section-heading-border: #C4B5FD; --label-color: #C4B5FD; --footer-text-color: #A78BFA; --focus-ring-color: var(--reset-button-bg); --theme-selector-bg: #4338CA; --theme-selector-border: #A78BFA; --theme-selector-text: #EEF2FF;
+        }
+        body[data-theme="sunny-yellow"] {
+            --bg-color: #FEF9C3; --main-container-bg: #ffffff; --main-container-border: #CA8A04; --main-container-shadow: #CA8A04; --question-card-bg: #FEF08A; --question-card-border: #FACC15; --question-card-shadow: #EAB308; --letter-bg: #FEF3C7; --letter-text: #854D0E; --letter-border: #FDE047; --letter-shadow: #FDE047; --action-button-border: #CA8A04; --action-button-shadow: #CA8A04; --action-button-hover-shadow: #CA8A04; --action-button-active-shadow: #CA8A04; --reset-button-bg: #FB923C; --reset-button-hover-bg: #F97316; --reset-button-active-bg: #EA580C; --yes-button-bg: #FACC15; --yes-button-border: #CA8A04; --yes-button-shadow: #CA8A04; --yes-button-hover-bg: #EAB308; --yes-button-hover-shadow: #A16207; --yes-button-active-bg: #CA8A04; --yes-button-active-shadow: #A16207; --no-button-bg: #FDBA74; --no-button-border: #C2410C; --no-button-shadow: #C2410C; --no-button-hover-bg: #FB923C; --no-button-hover-shadow: #9A3412; --no-button-active-bg: #EA580C; --no-button-active-shadow: #9A3412; --result-area-bg: #FEF3C7; --result-area-border: #FDE047; --result-area-shadow: #EAB308; --result-text-color: #854D0E; --thinking-text-color: #A16207; --heading-color: #B45309; --subheading-color: #A16207; --section-heading-color: #CA8A04; --section-heading-border: #FACC15; --label-color: #A16207; --footer-text-color: #B45309; --focus-ring-color: var(--reset-button-bg); --theme-selector-bg: #FEF3C7; --theme-selector-border: #FDE047; --theme-selector-text: #854D0E;
+        }
+        body[data-theme="candy-pink"] {
+            --bg-color: #FDF2F8; --main-container-bg: #ffffff; --main-container-border: #9D174D; --main-container-shadow: #9D174D; --question-card-bg: #FCE7F3; --question-card-border: #F9A8D4; --question-card-shadow: #F472B6; --letter-bg: #FBCFE8; --letter-text: #9D174D; --letter-border: #F9A8D4; --letter-shadow: #F9A8D4; --action-button-border: #9D174D; --action-button-shadow: #9D174D; --action-button-hover-shadow: #9D174D; --action-button-active-shadow: #9D174D; --reset-button-bg: #A78BFA; --reset-button-hover-bg: #8B5CF6; --reset-button-active-bg: #7C3AED; --yes-button-bg: #F472B6; --yes-button-border: #DB2777; --yes-button-shadow: #DB2777; --yes-button-hover-bg: #EC4899; --yes-button-hover-shadow: #BE185D; --yes-button-active-bg: #DB2777; --yes-button-active-shadow: #BE185D; --no-button-bg: #F0ABFC; --no-button-border: #C026D3; --no-button-shadow: #C026D3; --no-button-hover-bg: #E879F9; --no-button-hover-shadow: #A21CAF; --no-button-active-bg: #C026D3; --no-button-active-shadow: #A21CAF; --result-area-bg: #FBCFE8; --result-area-border: #F9A8D4; --result-area-shadow: #F472B6; --result-text-color: #9D174D; --thinking-text-color: #BE185D; --heading-color: #831843; --subheading-color: #BE185D; --section-heading-color: #DB2777; --section-heading-border: #F9A8D4; --label-color: #BE185D; --footer-text-color: #9D174D; --focus-ring-color: var(--reset-button-bg); --theme-selector-bg: #FBCFE8; --theme-selector-border: #F9A8D4; --theme-selector-text: #9D174D;
+        }
+        body[data-theme="night-mode"] {
+            --bg-color: #111827; --main-container-bg: #1F2937; --main-container-border: #6B7280; --main-container-shadow: #9CA3AF; --question-card-bg: #374151; --question-card-border: #9CA3AF; --question-card-shadow: #D1D5DB; --letter-bg: #4B5563; --letter-text: #F9FAFB; --letter-border: #9CA3AF; --letter-shadow: #9CA3AF; --action-button-text: #111827; --action-button-border: #9CA3AF; --action-button-shadow: #9CA3AF; --action-button-hover-shadow: #D1D5DB; --action-button-active-shadow: #6B7280; --reset-button-bg: #60A5FA; --reset-button-hover-bg: #3B82F6; --reset-button-active-bg: #2563EB; --yes-button-bg: #34D399; --yes-button-border: #A7F3D0; --yes-button-shadow: #A7F3D0; --yes-button-hover-bg: #6EE7B7; --yes-button-hover-shadow: #D1FAE5; --yes-button-active-bg: #10B981; --yes-button-active-shadow: #A7F3D0; --no-button-bg: #F87171; --no-button-border: #FECACA; --no-button-shadow: #FECACA; --no-button-hover-bg: #FCA5A5; --no-button-hover-shadow: #FEE2E2; --no-button-active-bg: #EF4444; --no-button-active-shadow: #FECACA; --result-area-bg: #4B5563; --result-area-border: #9CA3AF; --result-area-shadow: #D1D5DB; --result-text-color: #ECFDF5; --thinking-text-color: #D1D5DB; --heading-color: #F9FAFB; --subheading-color: #E5E7EB; --section-heading-color: #D1D5DB; --section-heading-border: #9CA3AF; --label-color: #E5E7EB; --footer-text-color: #9CA3AF; --focus-ring-color: var(--reset-button-bg); --theme-selector-bg: #4B5563; --theme-selector-border: #9CA3AF; --theme-selector-text: #F9FAFB;
+        }
+
+        /* --- General Styles using Variables --- */
+        html, body { height: 100%; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding-top: 5rem; /* Space for theme selector */
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+        main { flex-grow: 1; }
+
+        .main-container {
+            background-color: var(--main-container-bg);
+            border: 3px solid var(--main-container-border);
+            border-radius: 16px;
+            box-shadow: 8px 8px 0px var(--main-container-shadow);
+            width: 100%;
+            max-width: 42rem; /* Consistent width */
+            margin: 2rem auto 1rem auto; /* Default margin */
+            padding: 1.5rem sm:p-8; /* Consistent padding */
+            text-align: center;
+            flex-shrink: 0;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .question-card {
+            background-color: var(--question-card-bg);
+            border: 2px solid var(--question-card-border);
+            border-radius: 12px;
+            box-shadow: 4px 4px 0px var(--question-card-shadow);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            min-height: 250px; /* Ensure space for letters */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Styles for the letter grid */
+        .letter-set {
+            display: grid;
+            /* Adjust columns for better letter display */
+            grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+            gap: 0.75rem; /* gap-3 */
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            max-width: 380px; /* Slightly wider for letters */
+        }
+        .letter-set span {
+            background-color: var(--letter-bg);
+            color: var(--letter-text);
+            font-weight: 600;
+            padding: 0.5rem; /* Slightly more padding */
+            border-radius: 6px;
+            text-align: center;
+            font-size: 1rem; /* Slightly larger font */
+            border: 1px solid var(--letter-border);
+            box-shadow: 1px 1px 0px var(--letter-shadow);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Action Button Styles (Same as Birthday Guesser) */
+        .action-button {
+            color: var(--action-button-text); font-weight: 700; padding: 0.75rem 1.5rem; border-radius: 0.75rem; border: 3px solid var(--action-button-border); box-shadow: 5px 5px 0px var(--action-button-shadow); transition: all 0.15s ease-out; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem; min-width: 100px;
+        }
+        .action-button:hover {
+             box-shadow: 6px 6px 0px var(--action-button-hover-shadow); transform: translateY(-2px) translateX(-1px);
+        }
+        .action-button:active {
+             box-shadow: 2px 2px 0px var(--action-button-active-shadow); transform: translateY(2px) translateX(2px);
+        }
+         .action-button:focus {
+             outline: none; box-shadow: 5px 5px 0px var(--action-button-shadow), 0 0 0 3px var(--bg-color), 0 0 0 5px var(--focus-ring-color);
+         }
+        #resetBtn { background-color: var(--reset-button-bg); border-color: var(--action-button-border); box-shadow: 5px 5px 0px var(--action-button-shadow); }
+        #resetBtn:hover { background-color: var(--reset-button-hover-bg); box-shadow: 6px 6px 0px var(--action-button-hover-shadow); }
+        #resetBtn:active { background-color: var(--reset-button-active-bg); box-shadow: 2px 2px 0px var(--action-button-active-shadow); }
+        #resetBtn:focus { box-shadow: 5px 5px 0px var(--action-button-shadow), 0 0 0 3px var(--bg-color), 0 0 0 5px var(--reset-button-bg); }
+        .yes-button { background-color: var(--yes-button-bg); border-color: var(--yes-button-border); box-shadow: 5px 5px 0px var(--yes-button-shadow); }
+        .yes-button:hover { background-color: var(--yes-button-hover-bg); box-shadow: 6px 6px 0px var(--yes-button-hover-shadow); }
+        .yes-button:active { background-color: var(--yes-button-active-bg); box-shadow: 2px 2px 0px var(--yes-button-active-shadow); }
+        .yes-button:focus { box-shadow: 5px 5px 0px var(--yes-button-shadow), 0 0 0 3px var(--bg-color), 0 0 0 5px var(--yes-button-bg); }
+        .no-button { background-color: var(--no-button-bg); border-color: var(--no-button-border); box-shadow: 5px 5px 0px var(--no-button-shadow); }
+        .no-button:hover { background-color: var(--no-button-hover-bg); box-shadow: 6px 6px 0px var(--no-button-hover-shadow); }
+        .no-button:active { background-color: var(--no-button-active-bg); box-shadow: 2px 2px 0px var(--no-button-active-shadow); }
+        .no-button:focus { box-shadow: 5px 5px 0px var(--no-button-shadow), 0 0 0 3px var(--bg-color), 0 0 0 5px var(--no-button-bg); }
+
+        /* Result Area Styles (Same as Birthday Guesser) */
+        #resultArea {
+            background-color: var(--result-area-bg); border: 2px solid var(--result-area-border); border-radius: 12px; box-shadow: 4px 4px 0px var(--result-area-shadow); padding: 1.5rem; margin-top: 1.5rem; min-height: 100px; text-align: center; transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; opacity: 0; transform: scale(0.95);
+        }
+        #resultArea.visible {
+            opacity: 1; transform: scale(1);
+        }
+        #resultText { font-size: 1.8rem; /* Larger result text */ font-weight: 700; color: var(--result-text-color); margin-bottom: 0.5rem; transition: color 0.3s ease;}
+        #thinkingText { font-style: italic; color: var(--thinking-text-color); transition: color 0.3s ease;}
+
+        /* Headings & Labels using variables */
+        label { color: var(--label-color); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; transition: color 0.3s ease;}
+        #questionText { font-size: 1.1rem; font-weight: 600; color: var(--label-color); margin-bottom: 1rem; transition: color 0.3s ease;}
+        .main-heading {
+            color: var(--heading-color);
+            transition: color 0.3s ease;
+            padding-top: 1rem; /* Default padding */
+        }
+        .sub-heading { color: var(--subheading-color); transition: color 0.3s ease; }
+
+        /* Footer Styling (Same as Birthday Guesser) */
+        .page-footer {
+            text-align: center; padding: 1rem 0; margin-top: 1rem; font-size: 0.8rem; color: var(--footer-text-color); flex-shrink: 0; line-height: 1.5; transition: color 0.3s ease;
+        }
+        .page-footer p { margin-bottom: 0.25rem; }
+
+        /* Theme Selector Styles (Same as Birthday Guesser - Top Right Page) */
+        .theme-selector-container {
+            position: absolute; top: 1rem; right: 1rem; z-index: 10;
+        }
+        .theme-selector-label {
+             position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+        }
+        #themeSelector {
+            padding: 0.4rem 0.8rem; border-radius: 8px; border: 2px solid var(--theme-selector-border); background-color: var(--theme-selector-bg); color: var(--theme-selector-text); font-weight: 500; cursor: pointer; box-shadow: 2px 2px 0px var(--theme-selector-border); transition: all 0.2s ease; vertical-align: middle; font-size: 0.8rem;
+        }
+        #themeSelector:focus {
+            outline: none; box-shadow: 2px 2px 0px var(--theme-selector-border), 0 0 0 3px var(--main-container-bg), 0 0 0 5px var(--theme-selector-border);
+        }
+
+        /* Dark Theme Adjustments (Same as Birthday Guesser) */
+        body[data-theme="cosmic-purple"] .main-heading svg,
+        body[data-theme="night-mode"] .main-heading svg {
+             color: #F472B6;
+        }
+         body[data-theme="cosmic-purple"] .sub-heading,
+         body[data-theme="night-mode"] .sub-heading {
+             color: #D1D5DB;
+         }
+         body[data-theme="cosmic-purple"] #themeSelector:focus,
+         body[data-theme="night-mode"] #themeSelector:focus {
+             box-shadow: 2px 2px 0px var(--theme-selector-border), 0 0 0 3px var(--main-container-bg), 0 0 0 5px var(--theme-selector-border);
+         }
+
+        /* Hide class utility */
+        .hidden { display: none; }
+
+    </style>
+</head>
+<body class="p-4 md:p-6">
+
+    <div class="theme-selector-container">
+        <label for="themeSelector" class="theme-selector-label">Choose a Theme:</label>
+        <select id="themeSelector">
+            <option value="default">🎨 Default</option>
+            <option value="ocean-blue">🌊 Ocean Blue</option>
+            <option value="forest-green">🌲 Forest Green</option>
+            <option value="cosmic-purple">✨ Cosmic Purple</option>
+            <option value="sunny-yellow">☀️ Sunny Yellow</option>
+            <option value="candy-pink">🍬 Candy Pink</option>
+            <option value="night-mode">🌙 Night Mode</option>
+        </select>
+    </div>
+
+    <main>
+        <div class="main-container">
+            <h1 class="main-heading text-3xl sm:text-4xl font-bold text-center mb-6 tracking-tight flex items-center justify-center gap-3">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-9 h-9 text-purple-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                 </svg>
+                 Name Initial Revealer
+            </h1>
+
+            <p class="sub-heading text-center mb-6">Think of the <strong>first letter</strong> of your name (A-Z). I will ask you 5 questions. Answer honestly!</p>
+
+            <div id="gameArea">
+                <div id="questionCard" class="question-card hidden">
+                    <p id="questionText">Is the first letter of your name in this set?</p>
+                    <div id="letterSetDiv" class="letter-set">
+                        </div>
+                    <div class="flex gap-4 mt-4">
+                         <button id="yesBtn" class="action-button yes-button">Yes</button>
+                         <button id="noBtn" class="action-button no-button">No</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultArea" class="hidden">
+                <p id="thinkingText">Okay, let me think...</p>
+                <p id="resultText"></p>
+                 <button id="resetBtn" class="action-button mt-4">Play Again?</button>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="page-footer">
+        <p>© 2025 ToolForge. All rights reserved.</p>
+        <p>Built with ❤️ by Anas.</p>
+    </footer>
+
+    <script>
+        // --- DOM Elements ---
+        const gameArea = document.getElementById('gameArea');
+        const questionCard = document.getElementById('questionCard');
+        const questionText = document.getElementById('questionText');
+        const letterSetDiv = document.getElementById('letterSetDiv'); // Changed from numberSetDiv
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const resultArea = document.getElementById('resultArea');
+        const thinkingText = document.getElementById('thinkingText');
+        const resultText = document.getElementById('resultText');
+        const resetBtn = document.getElementById('resetBtn');
+        const themeSelector = document.getElementById('themeSelector');
+
+        // --- Game Logic ---
+        // Letters assigned values A=1, B=2, ..., Z=26
+        const letterSets = [
+            // Set 1 (Value 1, Binary: xxxx1) - Odd numbers
+            ['A', 'C', 'E', 'G', 'I', 'K', 'M', 'O', 'Q', 'S', 'U', 'W', 'Y'],
+            // Set 2 (Value 2, Binary: xxx1x)
+            ['B', 'C', 'F', 'G', 'J', 'K', 'N', 'O', 'R', 'S', 'V', 'W', 'Z'],
+            // Set 3 (Value 4, Binary: xx1xx)
+            ['D', 'E', 'F', 'G', 'L', 'M', 'N', 'O', 'T', 'U', 'V', 'W'],
+            // Set 4 (Value 8, Binary: x1xxx)
+            ['H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'X', 'Y', 'Z'],
+            // Set 5 (Value 16, Binary: 1xxxx)
+            ['P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        ];
+
+        let currentQuestionIndex = 0;
+        let guessedLetterValue = 0; // Stores the calculated value (1-26)
+
+        // --- Functions ---
+
+        /**
+         * Displays the current question card with the appropriate set of letters.
+         * @param {number} index - The index of the current question/letter set.
+         */
+        function displayQuestion(index) {
+            if (index < letterSets.length) {
+                questionText.textContent = `Question ${index + 1} of ${letterSets.length}: Is the first letter of your name in this set?`;
+                letterSetDiv.innerHTML = ''; // Clear previous letters
+                // Populate the grid with letters for the current set
+                letterSets[index].forEach(letter => {
+                    const span = document.createElement('span');
+                    span.textContent = letter;
+                    letterSetDiv.appendChild(span);
+                });
+                questionCard.classList.remove('hidden'); // Show question card
+                resultArea.classList.add('hidden');     // Hide result area
+                resultArea.classList.remove('visible'); // Ensure animation class is removed
+            } else {
+                // All questions asked, show the result
+                showResult();
+            }
+        }
+
+        /**
+         * Handles the user's answer (Yes/No) and proceeds to the next question or result.
+         * @param {boolean} isYes - True if the user clicked "Yes", false otherwise.
+         */
+        function handleAnswer(isYes) {
+            if (isYes) {
+                // Add the value corresponding to the current question's set (2^index)
+                guessedLetterValue += Math.pow(2, currentQuestionIndex);
+            }
+            currentQuestionIndex++; // Move to the next question index
+            // Add a small delay for visual feedback before showing the next question
+            setTimeout(() => {
+                 displayQuestion(currentQuestionIndex);
+            }, 150); // 150ms delay
+        }
+
+        /**
+         * Calculates and displays the guessed initial letter.
+         */
+        function showResult() {
+            questionCard.classList.add('hidden');   // Hide the question card
+            resultArea.classList.remove('hidden'); // Show the result area
+            resultText.textContent = '';          // Clear previous result text
+            thinkingText.textContent = 'Thinking... 🤔'; // Show thinking message
+            thinkingText.style.display = 'block'; // Make sure thinking text is visible
+
+            // Simulate thinking time
+            setTimeout(() => {
+                thinkingText.textContent = 'Got it! Let me reveal it... ✨';
+            }, 1000); // 1 second delay
+
+            // Final reveal after another delay
+            setTimeout(() => {
+                let revealedLetter = '';
+                // Check if the calculated value corresponds to a valid letter (A=1 to Z=26)
+                if (guessedLetterValue > 0 && guessedLetterValue <= 26) {
+                    // Convert the value to the corresponding uppercase letter
+                    // ASCII 'A' is 65. Since A=1, we add 64.
+                    revealedLetter = String.fromCharCode(guessedLetterValue + 64);
+                    resultText.textContent = `The first letter of your name is... ${revealedLetter}! 🎉`;
+                } else {
+                    // Handle cases where the result is invalid (e.g., all "No" answers, value > 26)
+                    resultText.textContent = "Hmm, that doesn't seem right. Did you answer all questions correctly? 🤔 Let's try again!";
+                }
+                thinkingText.style.display = 'none'; // Hide thinking text
+                resultArea.classList.add('visible'); // Trigger fade-in animation
+            }, 2500); // 2.5 seconds total thinking time
+        }
+
+        /**
+         * Resets the game state to start over.
+         */
+        function resetGame() {
+            currentQuestionIndex = 0;   // Reset question index
+            guessedLetterValue = 0;     // Reset calculated letter value
+            resultArea.classList.add('hidden');     // Hide result area
+            resultArea.classList.remove('visible'); // Reset animation class
+            displayQuestion(currentQuestionIndex); // Show the first question
+        }
+
+        // --- Theme Switching Logic (No localStorage) ---
+        /**
+         * Applies the selected theme by setting the data-theme attribute on the body.
+         * @param {string} themeName - The name of the theme to apply.
+         */
+        function applyTheme(themeName) {
+            document.body.dataset.theme = themeName; // Set the data-theme attribute
+            // NOTE: localStorage persistence is removed as per user request.
+        }
+
+        // Event listener for theme selector change
+        themeSelector.addEventListener('change', (event) => {
+            applyTheme(event.target.value);
+        });
+
+        // --- Event Listeners ---
+        yesBtn.addEventListener('click', () => handleAnswer(true));
+        noBtn.addEventListener('click', () => handleAnswer(false));
+        resetBtn.addEventListener('click', resetGame);
+
+        // --- Initial Load ---
+        // Apply default theme on load (or the first theme in the list)
+        applyTheme(themeSelector.value || 'default');
+        displayQuestion(currentQuestionIndex); // Start the game by showing the first question
+
+    </script>
+
+</body>
+</html>
